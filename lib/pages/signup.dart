@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../component/customTextField.dart';
 import '../component/error.dart';
 import '../theme/theme.dart';
+import 'login.dart';
 
 class Signup extends StatefulWidget {
   Signup({super.key});
@@ -21,107 +22,128 @@ class _SignupState extends State<Signup> {
 
   @override
   Widget build(BuildContext context) {
+    final deviceWidth = MediaQuery.of(context).size.width;
+    final deviceHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: Color(bgcolor),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 50,
-            ),
-            Center(
-              child: Text(
-                'Quiz App',
-                style: TextStyle(
-                  fontSize: 35,
-                  fontFamily: 'pacifico',
-                ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: deviceWidth * 0.1),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: deviceHeight * 0.05,
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Sign up',
-              style: TextStyle(
-                fontSize: 40,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text('Create Your Account'),
-            SizedBox(
-              height: 30,
-            ),
-            error.length > 0
-                ? Errorwidget(content: error)
-                : SizedBox(height: 0),
-            SizedBox(
-              height: 28.0,
-            ),
-            Customtextfield(
-              IsPassword: false,
-              image: Icons.email,
-              text: 'Email',
-              controller: emailController,
-            ),
-            Customtextfield(
-              IsPassword: true,
-              image: Icons.password,
-              text: 'Password',
-              controller: passwordController,
-            ),
-            Customtextfield(
-              IsPassword: true,
-              image: Icons.password,
-              text: 'Confirm Password',
-              controller: confirmPasswordController,
-            ),
-            SizedBox(
-              height: 25,
-            ),
-            SizedBox(
-              width: 350,
-              height: 60,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(Buttoncolor),
-                ),
-                onPressed: () {},
+              Center(
                 child: Text(
-                  'Sign up',
-                  style: TextStyle(fontSize: 20, color: Colors.white),
+                  'Quiz App',
+                  style: TextStyle(
+                    fontSize: deviceWidth * 0.09,
+                    fontFamily: 'pacifico',
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Already Have an Account?   ',
-                  style: TextStyle(fontSize: 15),
+              SizedBox(
+                height: deviceHeight * 0.02,
+              ),
+              Text(
+                'Sign up',
+                style: TextStyle(
+                  fontSize: deviceWidth * 0.1,
+                  fontWeight: FontWeight.bold,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    // Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) => Login()));
-                  },
+              ),
+              SizedBox(
+                height: deviceHeight * 0.01,
+              ),
+              Text('Create Your Account'),
+              SizedBox(
+                height: deviceHeight * 0.03,
+              ),
+              if (error.isNotEmpty)
+                Errorwidget(content: error)
+              else
+                SizedBox(height: deviceHeight * 0.03),
+              Customtextfield(
+                IsPassword: false,
+                image: Icons.email,
+                text: 'Email',
+                controller: emailController,
+              ),
+              SizedBox(
+                height: deviceHeight * 0.0001,
+              ),
+              Customtextfield(
+                IsPassword: true,
+                image: Icons.password,
+                text: 'Password',
+                controller: passwordController,
+              ),
+              SizedBox(
+                height: deviceHeight * 0.0001,
+              ),
+              Customtextfield(
+                IsPassword: true,
+                image: Icons.password,
+                text: 'Confirm Password',
+                controller: confirmPasswordController,
+              ),
+              SizedBox(
+                height: deviceHeight * 0.05,
+              ),
+              SizedBox(
+                width: deviceWidth * 0.8,
+                height: deviceHeight * 0.06,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(Buttoncolor),
+                  ),
+                  onPressed: () {},
                   child: Text(
-                    'Login',
+                    'Sign up',
                     style: TextStyle(
-                      fontSize: 18,
-                      color: Color(Buttoncolor),
+                      fontSize: deviceWidth * 0.06,
+                      color: Colors.white,
                     ),
                   ),
-                )
-              ],
-            ),
-          ],
+                ),
+              ),
+              SizedBox(
+                height: deviceHeight * 0.05,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Already Have an Account?   ',
+                    style: TextStyle(fontSize: deviceWidth * 0.04),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Login(),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      'Login',
+                      style: TextStyle(
+                        fontSize: deviceWidth * 0.045,
+                        color: Color(Buttoncolor),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: deviceHeight * 0.05,
+              ),
+            ],
+          ),
         ),
       ),
     );

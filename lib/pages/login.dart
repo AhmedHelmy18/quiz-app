@@ -19,104 +19,114 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    final deviceWidth = MediaQuery.of(context).size.width;
+    final deviceHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: Color(bgcolor),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 50,
-            ),
-            Center(
-              child: Text(
-                'Quiz App',
-                style: TextStyle(
-                  fontSize: 35,
-                  fontFamily: 'pacifico',
-                ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: deviceWidth * 0.1),
+          child: Column(
+            children: [
+              SizedBox(
+                height: deviceHeight * 0.05,
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Welcome Back',
-              style: TextStyle(
-                fontSize: 50,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text('Enter Your Credential to Login'),
-            SizedBox(
-              height: 30,
-            ),
-            error.length > 0
-                ? Errorwidget(content: error)
-                : SizedBox(height: 0),
-            SizedBox(
-              height: 28.0,
-            ),
-            Customtextfield(
-              IsPassword: false,
-              image: Icons.email,
-              text: 'Email',
-              controller: emailController,
-            ),
-            Customtextfield(
-              IsPassword: true,
-              image: Icons.password,
-              text: 'Password',
-              controller: passwordController,
-            ),
-            SizedBox(
-              width: 350,
-              height: 60,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(Buttoncolor),
-                ),
-                onPressed: () {},
+              Center(
                 child: Text(
-                  'Login',
-                  style: TextStyle(fontSize: 20, color: Colors.white),
+                  'Quiz App',
+                  style: TextStyle(
+                    fontSize: deviceWidth * 0.09,
+                    fontFamily: 'pacifico',
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 100,
-            ),
-            GestureDetector(
-              onTap: () {},
-              child: Text(
-                'Forget Password ?',
-                style: TextStyle(color: Color(Buttoncolor), fontSize: 17),
+              SizedBox(
+                height: deviceHeight * 0.02,
               ),
-            ),
-            SizedBox(
-              height: 100,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Don't Have an Account?    ",
-                  style: TextStyle(fontSize: 15),
+              Text(
+                'Welcome Back',
+                style: TextStyle(
+                  fontSize: deviceWidth * 0.12,
+                  fontWeight: FontWeight.bold,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
+              ),
+              Text('Enter Your Credential to Login'),
+              SizedBox(
+                height: deviceHeight * 0.03, // 3% of device height
+              ),
+              if (error.isNotEmpty)
+                Errorwidget(content: error)
+              else
+                SizedBox(height: deviceHeight * 0.03),
+              Customtextfield(
+                IsPassword: false,
+                image: Icons.person,
+                text: 'UserName',
+                controller: emailController,
+              ),
+              Customtextfield(
+                IsPassword: true,
+                image: Icons.password,
+                text: 'Password',
+                controller: passwordController,
+              ),
+              SizedBox(
+                width: deviceWidth * 0.8,
+                height: deviceHeight * 0.07,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(Buttoncolor),
+                  ),
+                  onPressed: () {},
                   child: Text(
-                    'Sign up',
+                    'Login',
                     style: TextStyle(
-                      fontSize: 18,
-                      color: Color(Buttoncolor),
+                      fontSize: deviceWidth * 0.05,
+                      color: Colors.white,
                     ),
                   ),
-                )
-              ],
-            ),
-          ],
+                ),
+              ),
+              SizedBox(
+                height: deviceHeight * 0.1,
+              ),
+              GestureDetector(
+                onTap: () {},
+                child: Text(
+                  'Forget Password ?',
+                  style: TextStyle(
+                    color: Color(Buttoncolor),
+                    fontSize: deviceWidth * 0.045,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: deviceHeight * 0.1,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Don't Have an Account?    ",
+                    style: TextStyle(fontSize: deviceWidth * 0.04),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      'Sign up',
+                      style: TextStyle(
+                        fontSize: deviceWidth * 0.045,
+                        color: Color(Buttoncolor),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
