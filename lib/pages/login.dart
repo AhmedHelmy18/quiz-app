@@ -61,8 +61,8 @@ class _LoginState extends State<Login> {
                 SizedBox(height: deviceHeight * 0.03),
               Customtextfield(
                 IsPassword: false,
-                image: Icons.person,
-                text: 'UserName',
+                image: Icons.email,
+                text: 'Email',
                 controller: emailController,
               ),
               Customtextfield(
