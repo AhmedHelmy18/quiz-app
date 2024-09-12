@@ -64,12 +64,14 @@ class _LoginState extends State<Login> {
                 image: Icons.email,
                 text: 'Email',
                 controller: emailController,
+                name: TextInputType.emailAddress,
               ),
               Customtextfield(
                 IsPassword: true,
                 image: Icons.password,
                 text: 'Password',
                 controller: passwordController,
+                name: TextInputType.text,
               ),
               SizedBox(
                 width: deviceWidth * 0.8,

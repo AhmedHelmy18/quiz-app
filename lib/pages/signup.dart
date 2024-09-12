@@ -71,6 +71,7 @@ class _SignupState extends State<Signup> {
                 image: Icons.email,
                 text: 'Email',
                 controller: emailController,
+                name: TextInputType.emailAddress,
               ),
               SizedBox(
                 height: deviceHeight * 0.0001,
@@ -80,6 +81,7 @@ class _SignupState extends State<Signup> {
                 image: Icons.password,
                 text: 'Password',
                 controller: passwordController,
+                name: TextInputType.text,
               ),
               SizedBox(
                 height: deviceHeight * 0.0001,
@@ -89,6 +91,7 @@ class _SignupState extends State<Signup> {
                 image: Icons.password,
                 text: 'Confirm Password',
                 controller: confirmPasswordController,
+                name: TextInputType.text,
               ),
               SizedBox(
                 height: deviceHeight * 0.05,
