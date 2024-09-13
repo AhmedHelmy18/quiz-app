@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import '../component/customTextField.dart';
 import '../component/error.dart';
 import '../theme/theme.dart';
+import 'home.dart';
 import 'login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+
 
 class Signup extends StatefulWidget {
   Signup({super.key});
@@ -103,7 +107,46 @@ class _SignupState extends State<Signup> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(Buttoncolor),
                   ),
-                  onPressed: () {},
+                  onPressed: () async {
+                    try {
+                      final credential = await FirebaseAuth.instance
+                          .createUserWithEmailAndPassword(
+                        email: emailController.text,
+                        password: passwordController.text,
+                      );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomePage(),
+                        ),
+                      );
+                    } on FirebaseAuthException catch (e) {
+                      if (e.code == 'weak-password') {
+                        setState(() {
+                          error = 'The password provided is too weak.';
+                        });
+                      } else if (e.code == 'email-already-in-use') {
+                        setState(() {
+                          error = 'The account already exists for that email.';
+                        });
+                      }
+                      if (emailController.text.isEmpty ||
+                          passwordController.text.isEmpty) {
+                        setState(() {
+                          error = 'Please fill in all fields.';
+                        });
+                        return;
+                      } else if (passwordController.text !=
+                          confirmPasswordController.text) {
+                        setState(() {
+                          error = 'Passwords do not match.';
+                        });
+                        return;
+                      }
+                    } catch (e) {
+                      error = e.toString();
+                    }
+                  },
                   child: Text(
                     'Sign up',
                     style: TextStyle(
