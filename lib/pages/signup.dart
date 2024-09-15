@@ -5,6 +5,7 @@ import '../theme/theme.dart';
 import 'home.dart';
 import 'login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class Signup extends StatefulWidget {
   Signup({super.key});
@@ -148,6 +149,60 @@ class _SignupState extends State<Signup> {
                   },
                   child: Text(
                     'Sign up',
+                    style: TextStyle(
+                      fontSize: deviceWidth * 0.06,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: deviceHeight * 0.03,
+              ),
+              SizedBox(
+                width: deviceWidth * 0.8,
+                height: deviceHeight * 0.06,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(Buttoncolor),
+                  ),
+                  onPressed: () async {
+                    try {
+                      final GoogleSignInAccount? googleUser =
+                          await GoogleSignIn().signIn();
+
+                      if (googleUser == null) {
+                        setState(() {
+                          error = 'Google Sign-In was cancelled.';
+                        });
+                        return;
+                      }
+
+                      final GoogleSignInAuthentication? googleAuth =
+                          await googleUser.authentication;
+
+                      final credential = GoogleAuthProvider.credential(
+                        accessToken: googleAuth?.accessToken,
+                        idToken: googleAuth?.idToken,
+                      );
+
+                      await FirebaseAuth.instance
+                          .signInWithCredential(credential);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomePage(),
+                        ),
+                      );
+                    } catch (e) {
+                      // setState(() {
+                      //   error = e.toString();
+                      // });
+                      print(e);
+                    }
+                  },
+                  child: Text(
+                    'Sign up with Google',
                     style: TextStyle(
                       fontSize: deviceWidth * 0.06,
                       color: Colors.white,
