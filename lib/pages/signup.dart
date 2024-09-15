@@ -6,8 +6,6 @@ import 'home.dart';
 import 'login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
-
 class Signup extends StatefulWidget {
   Signup({super.key});
 
@@ -108,43 +106,44 @@ class _SignupState extends State<Signup> {
                     backgroundColor: Color(Buttoncolor),
                   ),
                   onPressed: () async {
-                    try {
-                      final credential = await FirebaseAuth.instance
-                          .createUserWithEmailAndPassword(
-                        email: emailController.text,
-                        password: passwordController.text,
-                      );
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => HomePage(),
-                        ),
-                      );
-                    } on FirebaseAuthException catch (e) {
-                      if (e.code == 'weak-password') {
-                        setState(() {
-                          error = 'The password provided is too weak.';
-                        });
-                      } else if (e.code == 'email-already-in-use') {
-                        setState(() {
-                          error = 'The account already exists for that email.';
-                        });
+                    if (emailController.text.isEmpty ||
+                        passwordController.text.isEmpty ||
+                        confirmPasswordController.text.isEmpty) {
+                      setState(() {
+                        error = 'Please fill in all fields.';
+                      });
+                    } else if (passwordController.text !=
+                        confirmPasswordController.text) {
+                      setState(() {
+                        error = 'Passwords do not match.';
+                      });
+                    } else {
+                      try {
+                        final credential = await FirebaseAuth.instance
+                            .createUserWithEmailAndPassword(
+                          email: emailController.text,
+                          password: passwordController.text,
+                        );
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HomePage(),
+                          ),
+                        );
+                      } on FirebaseAuthException catch (e) {
+                        if (e.code == 'weak-password') {
+                          setState(() {
+                            error = 'The password provided is too weak.';
+                          });
+                        } else if (e.code == 'email-already-in-use') {
+                          setState(() {
+                            error =
+                                'The account already exists for that email.';
+                          });
+                        }
+                      } catch (e) {
+                        error = e.toString();
                       }
-                      if (emailController.text.isEmpty ||
-                          passwordController.text.isEmpty) {
-                        setState(() {
-                          error = 'Please fill in all fields.';
-                        });
-                        return;
-                      } else if (passwordController.text !=
-                          confirmPasswordController.text) {
-                        setState(() {
-                          error = 'Passwords do not match.';
-                        });
-                        return;
-                      }
-                    } catch (e) {
-                      error = e.toString();
                     }
                   },
                   child: Text(
@@ -168,7 +167,7 @@ class _SignupState extends State<Signup> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) => Login(),

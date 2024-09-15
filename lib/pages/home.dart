@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz_app/pages/signup.dart';
 import '../theme/theme.dart';
 
 class HomePage extends StatelessWidget {
@@ -21,7 +23,15 @@ class HomePage extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(Buttoncolor),
               ),
-              onPressed: () {},
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Signup(),
+                  ),
+                );
+              },
               child: Text(
                 'Log out',
                 style: TextStyle(color: Colors.white),

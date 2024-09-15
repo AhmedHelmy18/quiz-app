@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz_app/pages/home.dart';
+import 'package:quiz_app/pages/signup.dart';
 import '../component/customTextField.dart';
 import '../component/error.dart';
 import '../theme/theme.dart';
@@ -80,7 +83,42 @@ class _LoginState extends State<Login> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(Buttoncolor),
                   ),
-                  onPressed: () {},
+                  onPressed: () async {
+                    try {
+                      final credential = await FirebaseAuth.instance
+                          .signInWithEmailAndPassword(
+                              email: emailController.text,
+                              password: passwordController.text);
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomePage(),
+                        ),
+                      );
+                    } on FirebaseAuthException catch (e) {
+                      if (e.code == 'user-not-found') {
+                        setState(
+                          () {
+                            error = 'No user found for that email.';
+                          },
+                        );
+                      } else if (e.code == 'wrong-password') {
+                        setState(
+                          () {
+                            error = 'Wrong password provided for that user.';
+                          },
+                        );
+                      } else if (emailController.text.isEmpty ||
+                          passwordController.text.isEmpty) {
+                        setState(
+                          () {
+                            error = 'Please fill in all fields.';
+                          },
+                        );
+                      }
+                    }
+                  },
                   child: Text(
                     'Login',
                     style: TextStyle(
@@ -115,7 +153,12 @@ class _LoginState extends State<Login> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pop(context);
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Signup(),
+                        ),
+                      );
                     },
                     child: Text(
                       'Sign up',
