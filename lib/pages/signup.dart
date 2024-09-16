@@ -195,10 +195,9 @@ class _SignupState extends State<Signup> {
                         ),
                       );
                     } catch (e) {
-                      // setState(() {
-                      //   error = e.toString();
-                      // });
-                      print(e);
+                      setState(() {
+                        error = e.toString();
+                      });
                     }
                   },
                   child: Text(
